@@ -11,14 +11,13 @@ import UIKit
 class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 15.0, *) {
-            let appearance = UITabBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundEffect = UIBlurEffect(style: .light)
-            appearance.backgroundColor = UIColor(white: 1, alpha: 0.1)
-            tabBar.standardAppearance = appearance
-            tabBar.scrollEdgeAppearance = tabBar.standardAppearance
-        }
+//        if #available(iOS 15.0, *) {
+//            let appearance = UITabBarAppearance()
+//            appearance.configureWithOpaqueBackground()
+//            appearance.backgroundColor = UIColor(white: 1, alpha: 1)
+//            tabBar.standardAppearance = appearance
+//            tabBar.scrollEdgeAppearance = tabBar.standardAppearance
+//        }
         
         
         viewControllers = [createNavigationController(viewController: HabitsViewController(), title: "Today", image: "circle"),
@@ -33,6 +32,7 @@ class TabBarController: UITabBarController {
         viewController.navigationItem.title = title
         navController.tabBarItem.title = title
         navController.tabBarItem.image = UIImage(systemName: image)
+        navController.navigationBar.backgroundColor = .white
         return navController
     }
 }

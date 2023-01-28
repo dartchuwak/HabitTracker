@@ -16,6 +16,7 @@ class HabitDetailsViewController: UIViewController {
         let tv = UITableView(frame: .zero, style: .insetGrouped)
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.allowsSelection = false
+        tv.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)
         return tv
     }()
     
@@ -23,7 +24,7 @@ class HabitDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
+        view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = false
         addEditButton()
         view.addSubview(tableView)
@@ -45,7 +46,7 @@ class HabitDetailsViewController: UIViewController {
     }
     
    @objc private func editHabit() {
-       let vc = HabitViewController()
+       let vc = HabitViewControllerEdit()
        vc.id = id
        let habit = HabitsStore.shared.habits[id]
        vc.deleteButton.isHidden = false
@@ -66,9 +67,8 @@ extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! HabitDetailsTableViewCell
         let habitDate = HabitsStore.shared.dates[indexPath.item]
         let habit = HabitsStore.shared.habits[id]
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM yyyy"
-        cell.label.text = dateFormatter.string(from: habitDate)
+        let formattedHabitDate = HabitsStore.shared.trackDateString(forIndex: indexPath.item)
+        cell.label.text = formattedHabitDate
         if HabitsStore.shared.habit(habit, isTrackedIn: habitDate) {
             cell.checkMark.isHidden = false
         }

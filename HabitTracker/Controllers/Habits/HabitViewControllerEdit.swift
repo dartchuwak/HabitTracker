@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HabitViewController: UIViewController, UICollectionViewDelegate {
+class HabitViewControllerEdit: UIViewController, UICollectionViewDelegate {
     
     var id = Int()
     
@@ -18,7 +18,6 @@ class HabitViewController: UIViewController, UICollectionViewDelegate {
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.datePickerMode = .time
         picker.preferredDatePickerStyle = .wheels
-        picker.locale = Locale(identifier: "ru_RU")
         return picker
     }()
     
@@ -30,6 +29,14 @@ class HabitViewController: UIViewController, UICollectionViewDelegate {
         return label
     }()
     
+    let deleteButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Delete", for: .normal)
+        button.tintColor = .systemRed
+        button.isHidden = true
+        return button
+    }()
     
     let colorLabel: UILabel = {
         let label = UILabel(frame: .zero)
@@ -57,6 +64,7 @@ class HabitViewController: UIViewController, UICollectionViewDelegate {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.text = "Time"
         return label
     }()
     
@@ -64,7 +72,6 @@ class HabitViewController: UIViewController, UICollectionViewDelegate {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "Every day at 11:00"
         return label
     }()
     
@@ -73,17 +80,18 @@ class HabitViewController: UIViewController, UICollectionViewDelegate {
         self.view.backgroundColor = .white
         configureBarButtons()
         colorButtom.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openColorView)))
+        deleteButton.addTarget(self, action: #selector(deleteTask), for: .touchUpInside)
         taskTitleTextFiled.delegate = self
         colorPicker.delegate = self
-        colorPicker.selectedColor = self.colorButtom.tintColor
-        timePicker.addTarget(self, action: #selector(timePicked), for: .valueChanged)
+        timePicker.date = HabitsStore.shared.habits[id].date
+        timeSelectedLabel.text = HabitsStore.shared.habits[id].dateString
         addViews()
         layoutViews()
         currentDate()
     }
     
     private func configureBarButtons() {
-        let createBarButton = UIBarButtonItem(title: "Create", style: .done, target: self, action: #selector(createTask))
+        let createBarButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveTask))
         let closeBarButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeView))
         closeBarButton.tintColor = UIColor(named: "indigo")
         createBarButton.tintColor = UIColor(named: "indigo")
@@ -99,6 +107,7 @@ class HabitViewController: UIViewController, UICollectionViewDelegate {
         view.addSubview(timeLabel)
         view.addSubview(timeSelectedLabel)
         view.addSubview(timePicker)
+        view.addSubview(deleteButton)
     }
     
     private func layoutViews() {
@@ -124,13 +133,15 @@ class HabitViewController: UIViewController, UICollectionViewDelegate {
             timePicker.topAnchor.constraint(equalTo: timeSelectedLabel.bottomAnchor, constant: 15),
             timePicker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             timePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -18),
+            deleteButton.widthAnchor.constraint(equalToConstant: 147),
         ])
     }
     
     private func currentDate() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        timeSelectedLabel.text = "Every day at \(dateFormatter.string(from: timePicker.date))"
+        let dateString = HabitsStore.shared.habits[id].dateString
+        timeSelectedLabel.text = dateString
     }
     
     @objc private func openColorView() {
@@ -138,25 +149,19 @@ class HabitViewController: UIViewController, UICollectionViewDelegate {
         self.present(colorPicker, animated: true)
     }
     
-    @objc private func timePicked() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        timeSelectedLabel.text = "Every day at \(dateFormatter.string(from: timePicker.date))"
-    }
-    
     @objc private func closeView() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc private func createTask() {
+    @objc private func saveTask() {
         guard let text = taskTitleTextFiled.text else { return }
-        let color = colorButtom.tintColor ?? UIColor.orange
+        let habit = HabitsStore.shared.habits[id]
+        let color = colorButtom.tintColor ?? UIColor.systemBlue
         let date = timePicker.date
-        let newHabit = Habit(name: text,
-                             date: date,
-                             color: color)
-        let store = HabitsStore.shared
-        store.habits.append(newHabit)
+        habit.name = text
+        habit.color = color
+        habit.date = date
+        HabitsStore.shared.save()
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -168,7 +173,7 @@ class HabitViewController: UIViewController, UICollectionViewDelegate {
     
 }
 
-extension HabitViewController: UIColorPickerViewControllerDelegate {
+extension HabitViewControllerEdit: UIColorPickerViewControllerDelegate {
     
     //  Called once you have finished picking the color.
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
@@ -182,7 +187,7 @@ extension HabitViewController: UIColorPickerViewControllerDelegate {
 }
 
 
-extension HabitViewController: UITextFieldDelegate {
+extension HabitViewControllerEdit: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return false

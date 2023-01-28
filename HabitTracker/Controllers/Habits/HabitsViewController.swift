@@ -17,7 +17,7 @@ class HabitsViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = .lightGray
+        cv.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.969, alpha: 1)
         return cv
     }()
     
@@ -112,17 +112,15 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout, UICollection
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HabitCollectionViewCell
             let habit = HabitsStore.shared.habits[indexPath.item]
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm"
             cell.taskTitleLabel.text = habit.name
             cell.taskTitleLabel.textColor = habit.color
-            cell.timeTextLabel.text = dateFormatter.string(from: habit.date)
+            cell.timeTextLabel.text = habit.dateString
             cell.id = indexPath.row
             cell.cellDelegate = self
             if HabitsStore.shared.habits[indexPath.item].isAlreadyTakenToday {
-                cell.circle.image = UIImage(systemName: "circle.fill")
+                cell.circle.image = UIImage(named: "Subtract")?.withRenderingMode(.alwaysTemplate)
             } else {
-                cell.circle.image = UIImage(systemName: "circle")
+               cell.circle.image = UIImage(named: "Oval")?.withRenderingMode(.alwaysTemplate)
             }
             cell.circle.tintColor = habit.color
             return cell
@@ -136,7 +134,14 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout, UICollection
             habbitVC.title = habit.name
             habbitVC.id = indexPath.row
             habbitVC.navigationItem.title = habit.name
+         
             navigationController?.pushViewController(habbitVC, animated: true)
+            let save = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(createTask))
+            habbitVC.navigationItem.setRightBarButton(save, animated: true)
         }
+    }
+    
+    @objc func createTask() {
+        print("f")
     }
 }

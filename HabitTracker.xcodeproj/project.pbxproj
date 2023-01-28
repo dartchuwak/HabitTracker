@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A31A657B2983232900C23C0D /* HabitViewControllerEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31A657A2983232900C23C0D /* HabitViewControllerEdit.swift */; };
 		A347193E2948AE040027966F /* HabitDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A347193D2948AE040027966F /* HabitDetailsViewController.swift */; };
 		A34719402948B0DA0027966F /* HabitDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A347193F2948B0DA0027966F /* HabitDetailsTableViewCell.swift */; };
 		A363CE662945FE2400B2C940 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A363CE652945FE2400B2C940 /* InfoView.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A31A657A2983232900C23C0D /* HabitViewControllerEdit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitViewControllerEdit.swift; sourceTree = "<group>"; };
 		A347193D2948AE040027966F /* HabitDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsViewController.swift; sourceTree = "<group>"; };
 		A347193F2948B0DA0027966F /* HabitDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		A363CE652945FE2400B2C940 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
@@ -63,9 +65,9 @@
 			isa = PBXGroup;
 			children = (
 				A363CE652945FE2400B2C940 /* InfoView.swift */,
+				A347193F2948B0DA0027966F /* HabitDetailsTableViewCell.swift */,
 				A363CE6E294637B600B2C940 /* HabitCollectionViewCell.swift */,
 				A363CE702946491700B2C940 /* ProgressCollectionViewCell.swift */,
-				A347193F2948B0DA0027966F /* HabitDetailsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -93,6 +95,7 @@
 			children = (
 				A3D3633329438EBA00CA73C9 /* HabitsViewController.swift */,
 				A363CE6A2946093F00B2C940 /* HabitViewController.swift */,
+				A31A657A2983232900C23C0D /* HabitViewControllerEdit.swift */,
 				A363CE6C2946151B00B2C940 /* ColorPickerViewController.swift */,
 				A347193D2948AE040027966F /* HabitDetailsViewController.swift */,
 			);
@@ -212,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A347193E2948AE040027966F /* HabitDetailsViewController.swift in Sources */,
+				A31A657B2983232900C23C0D /* HabitViewControllerEdit.swift in Sources */,
 				A363CE6D2946151B00B2C940 /* ColorPickerViewController.swift in Sources */,
 				A363CE662945FE2400B2C940 /* InfoView.swift in Sources */,
 				A363CE712946491700B2C940 /* ProgressCollectionViewCell.swift in Sources */,

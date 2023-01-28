@@ -28,11 +28,9 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     
     
-    
     let circle: UIImageView = {
-        let pic = UIImage(systemName: "circle")
-        let imageView = UIImageView()
-        imageView.image = pic
+        let imageView = UIImageView(frame: .zero)
+        imageView.tintColor = .orange
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.isUserInteractionEnabled = true
         return imageView
@@ -52,7 +50,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = .lightGray
-        label.text = "Text"
+        label.text = "Count"
         return label
     }()
     
@@ -60,6 +58,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         self.layer.cornerRadius = 15
         self.backgroundColor = .white
+
         addViews()
         layoutViews()
         addGestures()
@@ -104,8 +103,9 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     @objc private func onTap() {
         if HabitsStore.shared.habits[id].isAlreadyTakenToday != true {
+            let habit = HabitsStore.shared.habits[id]
             circle.image = UIImage(systemName: "circle.fill")
-            HabitsStore.shared.track(HabitsStore.shared.habits[id])
+            HabitsStore.shared.track(habit)
             cellDelegate?.reloadData()
         } else { return }
     }

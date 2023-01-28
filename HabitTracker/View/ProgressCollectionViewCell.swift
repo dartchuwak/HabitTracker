@@ -25,7 +25,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     
     let label: UILabel = {
         let label = UILabel(frame: .zero)
-        label.text = "Все получитья!"
+        label.text = "Good job!"
         label.font = .systemFont(ofSize: 13)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

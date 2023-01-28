@@ -26,7 +26,6 @@ class HabitDetailsTableViewCell: UITableViewCell {
         let mark = UIImage(systemName: "checkmark")
         let image = UIImageView(frame: .zero)
         image.image = mark
-        image.tintColor = .orange
         image.translatesAutoresizingMaskIntoConstraints = false
         image.isHidden = true
         return image
@@ -37,7 +36,7 @@ class HabitDetailsTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .systemBlue
+    
         addSubview(label)
         addSubview(checkMark)
       
