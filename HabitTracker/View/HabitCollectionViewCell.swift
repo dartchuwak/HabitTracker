@@ -26,8 +26,6 @@ class HabitCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    
-    
     let circle: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.tintColor = .orange
@@ -35,7 +33,6 @@ class HabitCollectionViewCell: UICollectionViewCell {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
-    
     
     let timeTextLabel: UILabel = {
         let label = UILabel(frame: .zero)
@@ -50,7 +47,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = .lightGray
-        label.text = "Count"
+        label.text = ""
         return label
     }()
     
@@ -58,7 +55,6 @@ class HabitCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         self.layer.cornerRadius = 15
         self.backgroundColor = .white
-
         addViews()
         layoutViews()
         addGestures()

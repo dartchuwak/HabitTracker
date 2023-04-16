@@ -30,6 +30,9 @@ public final class Habit: Codable {
         }
     }
     
+    
+   // public var count: Int = 0
+    
     /// Описание времени выполнения привычки.
     public var dateString: String {
         "Every day at " + dateFormatter.string(from: date)
